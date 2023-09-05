@@ -13,10 +13,11 @@ namespace RazorProjectV5.Services.ServiceClasses
 
         public ItemService(ILogger<ItemService> logger, IJsonFileService<Item> jsonFileService)
         {
-            _items = MockData.MockItem.GetAllItemsModel();
-            //_items = _IjsonFileService.GetAllAsync().Result.ToList();
             _logger = logger;
             _IjsonFileService = jsonFileService;
+
+            //_items = MockData.MockItem.GetAllItemsModel();
+            _items = _IjsonFileService.GetAllAsync().Result.ToList();
         }
 
         public void AddItem(Item item)
@@ -127,8 +128,8 @@ namespace RazorProjectV5.Services.ServiceClasses
                         result.Add(item);
                     }
                 }
-
                 return result;
+
             }
             catch (Exception ex)
             {
