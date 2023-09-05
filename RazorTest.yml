@@ -1,0 +1,33 @@
+name: Razor Page Test
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./RazorProjectV5/
+
+        strategy:
+            matrix:
+                dotnet: [ 7.0 ]
+
+        env:
+            mode: "dev"
+
+        steps:
+            - uses: actions/checkout@v3
+            
+            - name: Setup .NET Core
+              uses: actions/setup-dotnet@v1
+              with:
+                dotnet-version: ${{ matrix.dotnet }}
+
+            - name: Install dependencies
+              run: dotnet restore
+            
+            - name: Test Razor Pages
+              run: dotnet test RazorProjectV5/RazorProjectV5.csproj
