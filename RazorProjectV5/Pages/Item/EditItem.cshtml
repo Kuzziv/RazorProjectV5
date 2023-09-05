@@ -1,0 +1,48 @@
+﻿@page "{id:int}"
+@model RazorProjectV5.Pages.Item.EditItemModel
+@{
+    ViewData["Title"] = "Edit Item";
+}
+
+
+<h1>Edit Item</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger mt-4">@TempData["ErrorMessage"]</div>
+                <a asp-page="/Item/GetAllItems" class="btn btn-secondary">Back</a>
+            }
+            else
+            {
+                <form method="post">
+                    <div class="form-group">
+                        <label asp-for="Item.Id" class="control-label"></label>
+                        <input asp-for="Item.Id" class="form-control" readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Item.Name" class="control-label"></label>
+                        <input asp-for="Item.Name" class="form-control" />
+                        <span asp-validation-for="Item.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Item.Price" class="control-label"></label>
+                        <input asp-for="Item.Price" class="form-control" />
+                        <span asp-validation-for="Item.Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Update" class="btn btn-primary" />
+                    </div>
+                </form>
+
+                <div>
+                    <a asp-page="/Item/GetAllItems">Back to List</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+</div>

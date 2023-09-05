@@ -1,0 +1,80 @@
+﻿@page
+@model RazorProjectV5.Pages.Item.GetAllItemsModel
+@{
+    ViewData["Title"] = "All Items";
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">All Items</h1>
+
+    @if (!ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var modelState in ViewData.ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                }
+            </ul>
+        </div>
+    }
+
+    <form method="post" class="mb-4">
+        <div class="input-group">
+            <input asp-for="SearchString" class="form-control" placeholder="Enter search term" />
+            <div class="input-group-append">
+                <input type="submit" asp-page-handler="SearchString" value="Search" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+
+    <form method="post" class="mb-4">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Min</span>
+            </div>
+            <input asp-for="MinPrice" class="form-control" />
+
+            <div class="input-group-prepend">
+                <span class="input-group-text">Max</span>
+            </div>
+            <input asp-for="MaxPrice" class="form-control" />
+
+            <div class="input-group-append">
+                <input type="submit" asp-page-handler="PriceFilter" value="Filter" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" type="button" title="Edit" asp-page="EditItem" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-danger btn-sm" type="button" title="Delete" asp-page="DeleteItem" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p>
+        <a class="btn btn-primary" asp-page="CreateItem">Create a new Item</a>
+    </p>
+</div>
